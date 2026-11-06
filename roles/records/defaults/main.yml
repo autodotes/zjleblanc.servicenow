@@ -1,3 +1,5 @@
 ---
 # snow_record_type: oauth_entity # name of the respective service now table
-snow_records: []
+# Public options; names are part of the role contract.
+snow_records: [] # noqa: var-naming[no-role-prefix]
+snow_records_out: {} # noqa: var-naming[no-role-prefix]

@@ -1,0 +1,43 @@
+---
+argument_specs:
+  main:
+    short_description: Idempotently insert or update ServiceNow table records.
+    description:
+      - Query each entry in snow_records and insert it when the exists query matches nothing.
+      - Patch the first matching row when a record already exists.
+      - Append each API response to snow_records_out under the table name.
+    author:
+      - Zachary LeBlanc (@zleblanc)
+    options:
+      snow_records:
+        type: list
+        elements: dict
+        required: false
+        default: []
+        description:
+          - ServiceNow table records to insert or update.
+        options:
+          type:
+            type: str
+            required: true
+            description:
+              - ServiceNow table name passed as the API resource.
+          data:
+            type: dict
+            required: true
+            description:
+              - Field values sent as the API request body.
+              - The loop label reads data.name, and the default exists query is name=<data.name>.
+          exists_query:
+            type: str
+            required: false
+            description:
+              - sysparm_query used to find an existing row.
+              - When omitted, the role queries name=<data.name>.
+      snow_records_out:
+        type: dict
+        required: false
+        default: {}
+        description:
+          - Records already written, keyed by table name.
+          - The role combines each API result into this dict.
